@@ -34,7 +34,7 @@ func main() {
 		log.Fatal("Didn't find team, sorry")
 	}
 	nextGame := getNextGame(teamAbbr)
-	log.Println(getTeamStats(teamAbbr)+", Next Game:", nextGame)
+	log.Println(getTeamStats(teamAbbr) + ", " + nextGame)
 }
 
 func getURLBytes(url string) ([]byte, error) {
@@ -90,7 +90,14 @@ func getNextGame(team string) string {
 				if err != nil { // Always check errors even if they should not happen.
 					panic(err)
 				}
-				return j.StartTimeUTC.In(tz).Format(time.RFC850)
+				nextGame := "Next Game: "
+				nextGame += j.StartTimeUTC.In(tz).Format(time.RFC850)
+				if j.AwayTeam.Abbrev == team {
+					nextGame += " against " + getTeamAbbr(j.HomeTeam.PlaceName.Default) + " (Away)"
+				} else {
+					nextGame += " against " + getTeamAbbr(j.AwayTeam.PlaceName.Default) + " (Home)"
+				}
+				return nextGame
 			}
 		}
 	}

@@ -37,7 +37,29 @@ type TeamSchedule struct {
 		GameState         string    `json:"gameState"`
 		GameScheduleState string    `json:"gameScheduleState"`
 		TvBroadcasts      []any     `json:"tvBroadcasts"`
-		GameOutcome       struct {
+		AwayTeam          struct {
+			ID        int `json:"id"`
+			PlaceName struct {
+				Default string `json:"default"`
+			} `json:"placeName"`
+			Abbrev         string `json:"abbrev"`
+			Logo           string `json:"logo"`
+			DarkLogo       string `json:"darkLogo"`
+			AwaySplitSquad bool   `json:"awaySplitSquad"`
+			Score          int    `json:"score"`
+		} `json:"awayTeam,omitempty"`
+		HomeTeam struct {
+			ID        int `json:"id"`
+			PlaceName struct {
+				Default string `json:"default"`
+			} `json:"placeName"`
+			Abbrev         string `json:"abbrev"`
+			Logo           string `json:"logo"`
+			DarkLogo       string `json:"darkLogo"`
+			HomeSplitSquad bool   `json:"homeSplitSquad"`
+			Score          int    `json:"score"`
+		} `json:"homeTeam,omitempty"`
+		GameOutcome struct {
 			LastPeriodType string `json:"lastPeriodType"`
 		} `json:"gameOutcome,omitempty"`
 	} `json:"games"`
