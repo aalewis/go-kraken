@@ -81,15 +81,15 @@ func getNextGame(team string) string {
 	}
 
 	now := time.Now()
-	tz, err := time.LoadLocation("America/Los_Angeles")
-	if err != nil { // Always check errors even if they should not happen.
-		panic(err)
-	}
 	var t TeamSchedule
 	json.Unmarshal(bodyBytes, &t)
 	if len(t.Games) > 0 {
 		for _, j := range t.Games {
 			if j.StartTimeUTC.After(now) {
+				tz, err := time.LoadLocation(t.ClubTimezone)
+				if err != nil { // Always check errors even if they should not happen.
+					panic(err)
+				}
 				return j.StartTimeUTC.In(tz).Format(time.RFC850)
 			}
 		}
