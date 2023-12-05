@@ -84,3 +84,48 @@ type Standings struct {
 		Wins int `json:"wins"`
 	} `json:"standings"`
 }
+
+type Game struct {
+	ID       int    `json:"id"`
+	Season   int    `json:"season"`
+	GameType int    `json:"gameType"`
+	GameDate string `json:"gameDate"`
+	Venue    struct {
+		Default string `json:"default"`
+	} `json:"venue"`
+	GameState         string `json:"gameState"`
+	GameScheduleState string `json:"gameScheduleState"`
+	Period            int    `json:"period"`
+	PeriodDescriptor  struct {
+		Number     int    `json:"number"`
+		PeriodType string `json:"periodType"`
+	} `json:"periodDescriptor"`
+	AwayTeam struct {
+		ID   int `json:"id"`
+		Name struct {
+			Default string `json:"default"`
+		} `json:"name"`
+		Abbrev    string `json:"abbrev"`
+		Score     int    `json:"score"`
+		Sog       int    `json:"sog"`
+		Logo      string `json:"logo"`
+		RadioLink string `json:"radioLink"`
+	} `json:"awayTeam"`
+	HomeTeam struct {
+		ID   int `json:"id"`
+		Name struct {
+			Default string `json:"default"`
+		} `json:"name"`
+		Abbrev    string `json:"abbrev"`
+		Score     int    `json:"score"`
+		Sog       int    `json:"sog"`
+		Logo      string `json:"logo"`
+		RadioLink string `json:"radioLink"`
+	} `json:"homeTeam"`
+	Clock struct {
+		TimeRemaining    string `json:"timeRemaining"`
+		SecondsRemaining int    `json:"secondsRemaining"`
+		Running          bool   `json:"running"`
+		InIntermission   bool   `json:"inIntermission"`
+	} `json:"clock"`
+}

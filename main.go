@@ -85,10 +85,18 @@ func getNextGame(team string) string {
 	json.Unmarshal(bodyBytes, &t)
 	if len(t.Games) > 0 {
 		for _, j := range t.Games {
-			if j.StartTimeUTC.After(now) {
+			if j.GameState == "LIVE" {
+				nextGame := "LIVE NOW: "
+				if j.AwayTeam.Abbrev == team {
+					nextGame += team + " " + strconv.Itoa(j.AwayTeam.Score) + " - " + j.HomeTeam.Abbrev + " " + strconv.Itoa(j.HomeTeam.Score)
+				} else {
+					nextGame += team + " " + strconv.Itoa(j.HomeTeam.Score) + " - " + j.AwayTeam.Abbrev + " " + strconv.Itoa(j.AwayTeam.Score)
+				}
+				return nextGame
+			} else if j.StartTimeUTC.After(now) {
 				tz, err := time.LoadLocation(t.ClubTimezone)
 				if err != nil { // Always check errors even if they should not happen.
-					panic(err)
+					return "---"
 				}
 				nextGame := "Next Game: "
 				nextGame += j.StartTimeUTC.In(tz).Format(time.RFC850)
